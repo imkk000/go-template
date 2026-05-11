@@ -1,4 +1,4 @@
-module github.com/imkk000/go-template/buf
+module buf
 
 go 1.26
 

@@ -33,26 +33,18 @@ Each plugin is invoked by buf as `go tool <name>`, so versions are reproducible 
 Requires [Task](https://taskfile.dev) (`go install github.com/go-task/task/v3/cmd/task@latest`).
 
 ```bash
-# one-time: pull tool binaries into the module cache
-task tidy
-
-# refresh BSR module deps (googleapis, grpc-gateway)
-task deps
-
-# generate Go + swagger
-task generate
-
-# other dev workflows
-task lint
-task format
-task breaking
-task clean
-
-# bump all pinned go-tool versions to @latest
-task upgrade
+task tidy        # one-time: pull tool binaries into the module cache
+task generate    # produce gen/go/... and gen/openapiv2/api.swagger.json
+task lint        # buf lint .proto sources
+task format      # buf format -w
+task clean       # remove gen/
 ```
 
 Run `task` with no args to list every task with its description.
+
+For less common workflows call buf directly: `go tool buf dep update`,
+`go tool buf breaking --against '.git#branch=main,subdir=buf'`. Bump pinned
+tools with `go get -tool <module>@latest && go mod tidy`.
 
 Output:
 
@@ -80,4 +72,4 @@ go get -tool <module-path>@latest
 - `buf.gen.yaml` uses `local:` (not `remote:`), so generation runs entirely offline once dependencies are cached.
 - `go.mod` `tool` directive requires **Go 1.24+**; this template targets **Go 1.26**.
 - The sample proto uses `google.api.http` + `openapiv2_swagger` annotations from the BSR deps in `buf.yaml`.
-- Tool versions float to whatever was latest at `task upgrade` time; commit `go.mod` / `go.sum` to pin them.
+- Tool versions are pinned in `go.mod`; bump with `go get -tool <module>@latest` then commit `go.mod` / `go.sum`.

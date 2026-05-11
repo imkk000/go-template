@@ -1,0 +1,49 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Gateway API",
+    "version": "0.1.0",
+    "description": "Replace this placeholder spec. For protobuf services, generate it with `protoc-gen-openapiv2` and point SWAGGER_SPEC at the result."
+  },
+  "servers": [
+    {"url": "http://localhost:8080"}
+  ],
+  "paths": {
+    "/healthz": {
+      "get": {
+        "summary": "Liveness probe",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {"status": {"type": "string"}}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/ping": {
+      "get": {
+        "summary": "Example route",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {"pong": {"type": "boolean"}}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@ package greeter.v1;
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
-option go_package = "github.com/imkk000/go-template/buf/gen/go/greeter/v1;greeterv1";
+option go_package = "buf/gen/go/greeter/v1;greeterv1";
 
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
