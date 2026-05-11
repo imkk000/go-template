@@ -1,0 +1,52 @@
+version: '3'
+
+tasks:
+  default:
+    desc: List available tasks
+    cmds:
+      - task --list
+    silent: true
+
+  tidy:
+    desc: Resolve and tidy Go module / tool dependencies
+    cmds:
+      - go mod tidy
+
+  deps:
+    desc: Refresh BSR module dependencies (googleapis, grpc-gateway)
+    cmds:
+      - go tool buf dep update
+
+  upgrade:
+    desc: Upgrade all pinned Go tools to their latest releases
+    cmds:
+      - go get -tool github.com/bufbuild/buf/cmd/buf@latest
+      - go get -tool github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+      - go get -tool google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+      - go get -tool google.golang.org/protobuf/cmd/protoc-gen-go@latest
+      - go mod tidy
+
+  generate:
+    desc: Generate Go code and swagger from .proto sources
+    cmds:
+      - go tool buf generate
+
+  lint:
+    desc: Lint .proto sources
+    cmds:
+      - go tool buf lint
+
+  format:
+    desc: Format .proto sources in place
+    cmds:
+      - go tool buf format -w
+
+  breaking:
+    desc: Detect breaking changes against main branch
+    cmds:
+      - go tool buf breaking --against '.git#branch=main,subdir=buf'
+
+  clean:
+    desc: Remove generated output
+    cmds:
+      - rm -rf gen/
